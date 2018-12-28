@@ -15,7 +15,6 @@ if (args.length === 1) {
 
 var userArg = args[1];
 var userArgValue = userArg.split("=")[1];
-userArgValue = parseInt(userArgValue) - 1;
 
 /**
  * Read the filesystem to get a list of json usernames and password in the format:
@@ -39,9 +38,9 @@ var fs = require('fs');
 var env_data = fs.read('passwords.json');
 //console.log('read env_data:', env_data);
 var env_obj = JSON.parse(env_data);
-var LOGBOOK_USERNAME = env_obj.users[userArgValue]["username"];
+var LOGBOOK_USERNAME = env_obj.users[parseInt(userArgValue) - 1]["username"];
 phantom.username = LOGBOOK_USERNAME;
-var LOGBOOK_PASSWORD = env_obj.users[userArgValue]["password"];
+var LOGBOOK_PASSWORD = env_obj.users[parseInt(userArgValue) - 1]["password"];
 phantom.password = LOGBOOK_PASSWORD;
 //console.log('credentials username:', LOGBOOK_USERNAME);
 //console.log('credentials password:', LOGBOOK_PASSWORD);
@@ -100,7 +99,7 @@ page.onLoadFinished = function(status){
         var path = 'html/'+logDateString+'_full_page_content.txt';
         fs.write(path, html, 'w');
 
-        page.evaluate(function(){
+        page.evaluate(function(userArgValue){
             console.log("in scrape evaluate function");
             var log_table_html = document.getElementById('log-table');
 
@@ -139,6 +138,7 @@ page.onLoadFinished = function(status){
                             dataRow[headers[columnIterator]] = column.innerHTML.trim();
                         }
                     }
+                    dataRow["User"] = userArgValue;
                     data.push(dataRow);
                 }
             }
@@ -151,7 +151,7 @@ page.onLoadFinished = function(status){
             xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
             xmlhttp.send(json);
 
-        });
+        }, userArgValue);
 
         console.log("fin");
         phantom.exit();
