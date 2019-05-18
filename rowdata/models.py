@@ -74,8 +74,9 @@ class Workout(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='workouts', on_delete=models.CASCADE, null=False)
     date = models.DateTimeField(auto_now=False)
     distance = models.CharField(max_length=255)
-    time = models.CharField(max_length=255)
-    pace = models.CharField(max_length=255)
+    time = models.CharField(max_length=255, blank=True)
+    pace = models.CharField(max_length=255, blank=True)
 
     def __str__(self):
-        return self.date
+        dateString = str(self.date)
+        return dateString
