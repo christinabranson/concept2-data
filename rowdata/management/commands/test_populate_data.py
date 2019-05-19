@@ -30,10 +30,10 @@ class Command(BaseCommand):
 
             for user in User.objects.all():
                 for month in range(11):
-                    month = month + 1
+                    month = month + 1 # we don't want month 0
                     number_workouts_this_month = random.randint(1, 15)
                     for day in range(number_workouts_this_month):
-                        day = random.randint(1, 28)
-                        distance = random.randint(1000,10000)
-                        date = datetime.datetime(2019, month, day, random.randint(1,23), random.randint(1,59), random.randint(1,59), tzinfo=tz)
-                        user.workouts.create(distance=distance, date=date)
+                        random_day = random.randint(1, 28)
+                        random_distance = random.randint(1000,10000)
+                        random_date = datetime.datetime(2019, month, random_day, random.randint(1,23), random.randint(1,59), random.randint(1,59), tzinfo=tz)
+                        user.workouts.create(distance=random_distance, date=random_date)

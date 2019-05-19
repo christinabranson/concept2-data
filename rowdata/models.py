@@ -67,6 +67,17 @@ class User(AbstractBaseUser, PermissionsMixin):
         '''
         return self.first_name
 
+    def get_total_distance(self, start_date, end_date):
+        from django.db.models import Sum
+        return self.workouts.filter(date__gte=start_date).filter(date__lt=end_date).aggregate(Sum('distance'))
+
+    def get_icon_name(self):
+        return "boatr.png"
+        if self.pk == 1:
+            return "C-sprite.png"
+        else:
+            return "I-sprite.png"
+
 # Create your models here.
 class Workout(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
@@ -80,3 +91,16 @@ class Workout(models.Model):
     def __str__(self):
         dateString = str(self.date)
         return dateString
+
+# Create your models here.
+class Race(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='races', on_delete=models.CASCADE, null=False)
+    name = models.CharField(max_length=255, blank=False)
+    start_date = models.DateTimeField(auto_now=False)
+    end_date = models.DateTimeField(auto_now=False)
+    distance = models.CharField(max_length=255, blank=True, help_text=_('Optional. If entered, race will end once one user reaches the distance'))
+
+    def __str__(self):
+        return self.name

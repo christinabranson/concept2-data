@@ -1,0 +1,68 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<input type="hidden" name="raceDistance" id="distance_race" value="" />
+{% for user in users %}
+<div class="user user{{ user.id }}">
+   <input type="hidden" name="distance_user{{ user.id }}" id="distance_user{{ user.id }}" value="{{ user.totalDistance }}" />
+   <div class="icon" style="background-image: url('static/img/{{ user.get_icon_name }}')"></div>
+   <span class="name">{{ user.first_name }}</span> - <span class="distance">{{ user.totalDistance }}m</span>
+</div>
+{% endfor %}
+{% endblock %}
+{% block customjs %}
+<script>
+   /**
+   * Script to move the user's boat an appropriate distance across the screen
+   **/
+
+   $( document ).ready(function() {
+       moveBoats();
+   });
+
+   $(window).on('resize', function(){
+     moveBoats();
+   });
+
+   function moveBoats() {
+     var win = $(this); //this = window
+
+     var totalActualWidth = win.width();
+     console.log(totalActualWidth);
+
+     var user1Distance = $("input#distance_user1").val()
+     var user2Distance = $("input#distance_user2").val()
+
+     var totalProportionalWidth = 1;
+
+
+     var raceValue = $("input#distance_race").val()
+     if (raceValue > 0) {
+       totalProportionalWidth = raceValue;
+     } else {
+       totalProportionalWidth = Math.max(user1Distance, user2Distance) - 100;
+     }
+
+     console.log(totalProportionalWidth);
+
+     var user1Position = user1Distance * totalActualWidth / totalProportionalWidth - 200;
+     var user2Position = user2Distance * totalActualWidth / totalProportionalWidth - 200;
+
+     console.log("User 1 position: " + user1Position);
+     console.log("User 2 position: " + user2Position);
+
+     $(".user1").animate({
+       left: user1Position+"px",
+   }, 5000 );
+
+         $(".user2").animate({
+       left: user2Position+"px",
+   }, 5000 );
+
+   }
+
+
+
+</script>
+{% endblock %}

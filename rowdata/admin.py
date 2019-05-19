@@ -23,3 +23,6 @@ class UserAdmin(admin.ModelAdmin):
         return obj.workouts.all().count()
 
 admin.site.register(models.User, UserAdmin)
+
+
+admin.site.register(models.Race)
