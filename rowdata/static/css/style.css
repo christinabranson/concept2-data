@@ -15,10 +15,20 @@ font-family: 'Open Sans', sans-serif;
   margin-bottom: 20px;
 }
 
+.mainBox {
+  background-color: rgba(0,0,0,.5);
+  margin: 50px;
+  padding: 25px;
+font-family: 'VT323', monospace;
+font-size: 2em;
+    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+    color: white;
+}
+
 .user {
 font-family: 'VT323', monospace;
 font-size: 2em;
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
     line-height: 1em;
         color: #fff;
 }
@@ -40,11 +50,8 @@ font-size: 2em;
     margin-top: -20px;
     color: yellow;
 }
-
-
-
     .user .distance {
-    color: green;
+    color: white;
     }
 
     .user1 {

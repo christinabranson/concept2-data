@@ -17,17 +17,37 @@
          <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                <li class="nav-item">
-                  <a class="nav-link" href="#">Home (This Year)</a>
+                  <a class="nav-link" href="{% url 'home' %}">Home (This Year)</a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link" href="#">About</a>
+                  <a class="nav-link" href="{% url 'about' %}">About</a>
                </li>
-               <li class="nav-item">
-                  <a class="nav-link" href="#">Monthly</a>
-               </li>
-               <li class="nav-item">
-                  <a class="nav-link" href="#">Races</a>
-               </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMonths" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Months
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+           {% for valid_month in global.valid_months %}
+           <a class="dropdown-item" href="{% url 'month' year=valid_month.year month=valid_month.month %}">{{valid_month.prettyMonth }} {{ valid_month.year }}</a>
+           {% endfor %}
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url 'all_months' %}">View All Months</a>
+        </div>
+      </li>
+
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownRaces" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Races
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+           {% for race in global.races %}
+           <a class="dropdown-item" href="{% url 'race' race_id=race.id %}">{{ race.name }}</a>
+           {% endfor %}
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url 'all_races' %}">View All Races</a>
+        </div>
+      </li>
             </ul>
          </div>
       </nav>

@@ -98,8 +98,9 @@ class Race(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='races', on_delete=models.CASCADE, null=False)
     name = models.CharField(max_length=255, blank=False)
+    description = models.TextField(blank=True)
     start_date = models.DateTimeField(auto_now=False)
-    end_date = models.DateTimeField(auto_now=False)
+    end_date = models.DateTimeField(auto_now=False, blank=True, null=True)
     distance = models.CharField(max_length=255, blank=True, help_text=_('Optional. If entered, race will end once one user reaches the distance'))
 
     def __str__(self):

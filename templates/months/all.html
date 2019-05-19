@@ -1,0 +1,15 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}All Races{% endblock %}
+{% block content %}
+
+<div class="mainBox">
+    <p>All races...</p>
+    <ul>
+        {% for race in all_races %}
+        <li><a href="{% url 'race' race_id=race.id %}">{{ race }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

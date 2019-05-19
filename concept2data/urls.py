@@ -19,5 +19,17 @@ from rowdata import views as rowdata_views
 
 urlpatterns = [
     path('', rowdata_views.home, name='home'),
+    path('about', rowdata_views.about, name='about'),
+    # Monthly View
+    path('months', rowdata_views.all_months, name='all_months'),
+    path('months/month/<int:year>/<int:month>', rowdata_views.month, name='month'),
+
+    # Data View
+    path('months/month/data/<int:user_id>/<int:year>/<int:month>', rowdata_views.month_data, name='month_data'),
+
+    # Race View
+    path('races', rowdata_views.all_races, name='all_races'),
+    path('races/race/<int:race_id>', rowdata_views.race, name='race'),
+
     path('admin/', admin.site.urls),
 ]

@@ -5,18 +5,19 @@
 {% block content %}
 
 <div class="mainBox">
+    <h1>Data for Month: {{ start_date|date:"F Y" }}</h1>
     <p>Quisque mattis, orci eget bibendum tempus, enim purus rhoncus odio, eu ornare libero leo ac elit. Donec nibh ligula, sollicitudin a porta in, hendrerit quis massa. Fusce bibendum diam in scelerisque semper. Sed quis ultricies lorem. Suspendisse venenatis pharetra aliquet. Nullam rhoncus gravida nunc, consectetur vulputate massa. Nulla velit neque, egestas et vehicula imperdiet, semper vitae arcu. Vestibulum eleifend purus scelerisque risus venenatis porta.
     </p>
 </div>
 
 <input type="hidden" name="raceDistance" id="distance_race" value="" />
-{% for user in users %}
+
 <div class="user user{{ user.id }}">
    <input type="hidden" name="distance_user{{ user.id }}" id="distance_user{{ user.id }}" value="{{ user.totalDistance }}" />
    <div class="icon" style="background-image: url('/static/img/{{ user.get_icon_name }}')"></div>
    <span class="name">{{ user.first_name }}</span> - <span class="distance">{{ user.totalDistance|intcomma }} m</span>
 </div>
-{% endfor %}
+
 {% endblock %}
 {% block customjs %}
 <script>
