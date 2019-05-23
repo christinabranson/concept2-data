@@ -146,23 +146,31 @@ def month_data(request, user_id, year, month):
     workout_data = collections.defaultdict(list)
     for day in range(daysInMonth):
         day = day + 1
+        date = datetime.datetime(year, month, day, 0, 0, 0, tzinfo=tz)
         distanceObj = user_workouts.filter(date__day=day).aggregate(totalDistance=Sum('distance'))
         distance = distanceObj['totalDistance']
         if distance is None:
             distance = 0
-        workout_data[day].append({'distance': distance})
+        workout_data[day].append({'distance': distance, 'date': date.strftime("%b %d")})
+        #workout_data[day].append({'date': date.strftime("%b %d %Y")})
 
     logger.debug(workout_data)
 
+    # this is hella ugly, but it works
+    if user_id == 1:
+        other_user_id = 2
+    else:
+        other_user_id = 1
 
     return render(request, 'months/data.html', {
         # Global variables
         'global': getGlobalVariables(),
         # Template variables
         'user': user,
-        'workout_data': workout_data,
+        'workout_data': workout_data.items(),
         'start_date': start_date,
         'end_date': end_date,
+        'other_user_id': other_user_id,
     })
 
 

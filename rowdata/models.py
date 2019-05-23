@@ -44,6 +44,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(_('date joined'), auto_now_add=True)
     is_active = models.BooleanField(_('active'), default=True)
     is_staff = models.BooleanField( _('staff status'), default=False, help_text=_('Designates whether the user can log into this site.'))
+    monthly_goal = models.IntegerField(default=100000, help_text=_('Monthly goal (m)'))
 
     objects = UserManager()
 
