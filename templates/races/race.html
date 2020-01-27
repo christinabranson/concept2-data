@@ -1,0 +1,78 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}Race: {{race.name }}{% endblock %}
+{% block content %}
+
+<div class="mainBox">
+    <h1>{{ race.name }}</h1>
+    <p>{{ race.description }}</p>
+</div>
+
+<input type="hidden" name="raceDistance" id="distance_race" value="{{ race.distance }}" />
+{% for user in users %}
+<div class="user user{{ user.id }}">
+   <input type="hidden" name="distance_user{{ user.id }}" id="distance_user{{ user.id }}" value="{{ user.totalDistance }}" />
+   <div class="icon" style="background-image: url('/static/img/{{ user.get_icon_name }}')"></div>
+   <span class="name">{{ user.first_name }}</span> - <span class="distance">{{ user.totalDistance|intcomma }} m</span>
+</div>
+{% endfor %}
+{% endblock %}
+{% block customjs %}
+<script>
+   /**
+   * Script to move the user's boat an appropriate distance across the screen
+   **/
+
+   $( document ).ready(function() {
+       moveBoats();
+   });
+
+   $(window).on('resize', function(){
+     moveBoats();
+   });
+
+   function moveBoats() {
+     var win = $(this); //this = window
+
+     var totalActualWidthPX = win.width();
+     console.log(totalActualWidthPX);
+
+     var user1DistanceM = $("input#distance_user1").val()
+     var user2DistanceM = $("input#distance_user2").val()
+
+     var totalProportionalWidthM = 1;
+
+
+     var raceValue = $("input#distance_race").val()
+     if (raceValue > 0) {
+       totalProportionalWidthM = raceValue;
+     } else {
+       totalProportionalWidthM = Math.max(user1Distance, user2Distance) - 100;
+     }
+
+     console.log(totalProportionalWidthM);
+
+     var user1PositionPX = user1DistanceM * totalActualWidthPX / totalProportionalWidthM - 300;
+     var user2PositionPX = user2DistanceM * totalActualWidthPX / totalProportionalWidthM - 300;
+
+     user1PositionPX = Math.min(totalActualWidthPX, user1PositionPX) - 300;
+     user2PositionPX = Math.min(totalActualWidthPX, user2PositionPX) - 300;
+
+     console.log("User 1 position: " + user1PositionPX);
+     console.log("User 2 position: " + user2PositionPX);
+
+     $(".user1").animate({
+       left: user1PositionPX+"px",
+   }, 5000 );
+
+         $(".user2").animate({
+       left: user2PositionPX+"px",
+   }, 5000 );
+
+   }
+
+
+
+</script>
+{% endblock %}

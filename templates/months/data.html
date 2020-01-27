@@ -1,0 +1,132 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %} {{ user.first_name }}'s Data for Month: {{ start_date|date:"F Y" }} {% endblock %}
+
+{% block customstyle %}
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css">
+{% endblock %}
+
+{% block content %}
+
+<div class="mainBox">
+    <h1>{{ user.first_name }}'s Data for Month: {{ start_date|date:"F Y" }}</h1>
+    <canvas id="dataChart" width="400" height="100"></canvas>
+</div>
+
+<input type="hidden" name="raceDistance" id="distance_race" value="{{ user.monthly_goal }}" />
+
+<div class="user user{{ user.id }}">
+   <input type="hidden" name="distance_user{{ user.id }}" id="distance_user{{ user.id }}" value="{{ user.totalDistance }}" />
+    <input type="hidden" name="distance_user{{ other_user_id }}" id="distance_user{{ other_user_id }}" value="0" />
+   <div class="icon" style="background-image: url('/static/img/{{ user.get_icon_name }}')"></div>
+   <span class="name">{{ user.first_name }}</span> - <span class="distance">{{ user.totalDistance|intcomma }} m</span>
+</div>
+
+{% endblock %}
+{% block customjs %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+<script>
+
+
+    /**
+    * ChartJS
+    **/
+Chart.defaults.scale.gridLines.display = false;
+Chart.defaults.global.defaultFontColor = "white";
+Chart.defaults.global.defaultFontSize = 11;
+Chart.defaults.global.defaultFontFamily = "'Open Sans', sans-serif";
+
+var ctx = document.getElementById('dataChart');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: [{% for workout_datum in workout_data %} '{{ workout_datum.1.0.date }}', {% endfor%}],
+        datasets: [{
+            label: "Meters Rowed",
+            data: [{% for workout_datum in workout_data %} '{{ workout_datum.1.0.distance }}', {% endfor%}],
+            backgroundColor: [{% for workout_datum in workout_data %} 'rgba(0, 0, 0, 0.8)', {% endfor%}],
+            borderColor: [{% for workout_datum in workout_data %} 'rgba(255, 255, 255, 1)', {% endfor%}],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        legend: {
+            labels: {
+                //fontColor: "white",
+                //fontSize: 18
+            }
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    //fontColor: "white",
+                    //fontSize: 14,
+                }
+            }],
+            xAxes: [{
+                ticks: {
+                    //fontColor: "white",
+                    //fontSize: 14,
+                }
+            }]
+        }
+    }
+});
+
+
+
+   /**
+   * Script to move the user's boat an appropriate distance across the screen
+   **/
+
+   $( document ).ready(function() {
+       moveBoats();
+   });
+
+   $(window).on('resize', function(){
+     moveBoats();
+   });
+
+   function moveBoats() {
+     var win = $(this); //this = window
+
+     var totalActualWidth = win.width();
+     console.log(totalActualWidth);
+
+     var user1Distance = $("input#distance_user1").val()
+     var user2Distance = $("input#distance_user2").val()
+
+     var totalProportionalWidth = 1;
+
+
+     var raceValue = $("input#distance_race").val()
+     if (raceValue > 0) {
+       totalProportionalWidth = raceValue;
+     } else {
+       totalProportionalWidth = Math.max(user1Distance, user2Distance) - 100;
+     }
+
+     console.log(totalProportionalWidth);
+
+     var user1Position = user1Distance * totalActualWidth / totalProportionalWidth - 300;
+     var user2Position = user2Distance * totalActualWidth / totalProportionalWidth - 300;
+
+     console.log("User 1 position: " + user1Position);
+     console.log("User 2 position: " + user2Position);
+
+     $(".user1").animate({
+       left: user1Position+"px",
+   }, 5000 );
+
+         $(".user2").animate({
+       left: user2Position+"px",
+   }, 5000 );
+
+   }
+
+
+
+</script>
+{% endblock %}

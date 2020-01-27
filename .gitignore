@@ -1,12 +1,8 @@
-.DS_Store
-.DS_Store*
-.idea/
-scrape/html/*.html
-scrape/html/*.txt
-scrape/screenshots/*.png
-/vendor
-/node_modules
-/public/storage
-Homestead.yaml
-Homestead.json
 .env
+.idea/*
+venv/*
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class

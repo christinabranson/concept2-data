@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|VT323&display=swap');
+
+body {
+font-family: 'Open Sans', sans-serif;
+  background: url("http://personal-wp.aycdev.com/wp-content/themes/portfolio/assets/img/background2.gif")
+    no-repeat center bottom fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.navbar {
+  background-color: rgba(0,0,0,.5);
+  margin-bottom: 20px;
+}
+
+.mainBox {
+  background-color: rgba(0,0,0,.5);
+  margin: 50px;
+  padding: 25px;
+font-family: 'VT323', monospace;
+font-size: 2em;
+    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+    color: white;
+    max-height: 500px;
+}
+
+.user {
+font-family: 'VT323', monospace;
+font-size: 2em;
+    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+    line-height: 1em;
+        color: #fff;
+}
+
+.user .icon {
+
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+    min-width: 200px;
+    min-height: 120px
+    width: 200px;
+    height: 120px;
+        max-width: 200px;
+    max-height: 120px
+}
+
+.user .name {
+    margin-top: -20px;
+    color: yellow;
+}
+    .user .distance {
+    color: white;
+    }
+
+    .user1 {
+        position: absolute;
+        bottom: 250px;
+    }
+
+    .user2 {
+        position: absolute;
+        bottom: 50px;
+    }

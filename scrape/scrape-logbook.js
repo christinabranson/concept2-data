@@ -35,7 +35,7 @@ var userArgValue = userArg.split("=")[1];
  * We will then parse the javascript to get the appropriate username and password based on the argument sent in
  */
 var fs = require('fs');
-var env_data = fs.read('passwords.json');
+var env_data = fs.read('.env');
 //console.log('read env_data:', env_data);
 var env_obj = JSON.parse(env_data);
 var LOGBOOK_USERNAME = env_obj.users[parseInt(userArgValue) - 1]["username"];
