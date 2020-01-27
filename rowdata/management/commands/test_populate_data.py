@@ -24,7 +24,7 @@ class Command(BaseCommand):
         if settings.DEBUG:
 
             with connection.cursor() as cursor:
-                cursor.execute("delete from rowdata_workout",[])
+                #cursor.execute("delete from rowdata_workout",[])
 
                 tz = pytz.timezone('America/New_York')
 
@@ -35,5 +35,5 @@ class Command(BaseCommand):
                     for day in range(number_workouts_this_month):
                         random_day = random.randint(1, 28)
                         random_distance = random.randint(1000,10000)
-                        random_date = datetime.datetime(2019, month, random_day, random.randint(1,23), random.randint(1,59), random.randint(1,59), tzinfo=tz)
+                        random_date = datetime.datetime(2018, month, random_day, random.randint(1,23), random.randint(1,59), random.randint(1,59), tzinfo=tz)
                         user.workouts.create(distance=random_distance, date=random_date)

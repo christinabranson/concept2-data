@@ -33,11 +33,23 @@ def dictfetchall(cursor):
     ]
 
 def getValidMonths():
-    query = 'SELECT strftime("%Y", date) AS year, strftime("%m", date) AS month, case strftime("%m", date) when "01" then "January" when "02" then "Febuary" when "03" then "March" when "04" then "April" when "05" then "May" when "06" then "June" when "07" then "July" when "08" then "August" when "09" then "September" when "10" then "October" when "11" then "November" when "12" then "December" else "" end AS prettyMonth  FROM rowdata_workout GROUP BY strftime("%Y", date), strftime("%m", date);'
+    now = datetime.datetime.now()
+    formattednow = now.strftime("%Y%m")
+    query = 'SELECT strftime("%Y", date) AS year, strftime("%m", date) AS month, case strftime("%m", date) when "01" then "January" when "02" then "Febuary" when "03" then "March" when "04" then "April" when "05" then "May" when "06" then "June" when "07" then "July" when "08" then "August" when "09" then "September" when "10" then "October" when "11" then "November" when "12" then "December" else "" end AS prettyMonth  FROM rowdata_workout WHERE strftime("%Y%m", date) <= "'+formattednow+'" GROUP BY strftime("%Y", date), strftime("%m", date) ORDER BY date DESC LIMIT 6;'
 
     with connection.cursor() as cursor:
         cursor.execute(query, [])
         return dictfetchall(cursor)
+
+def getAllValidMonths():
+    now = datetime.datetime.now()
+    formattednow = now.strftime("%Y%m")
+    query = 'SELECT strftime("%Y", date) AS year, strftime("%m", date) AS month, case strftime("%m", date) when "01" then "January" when "02" then "Febuary" when "03" then "March" when "04" then "April" when "05" then "May" when "06" then "June" when "07" then "July" when "08" then "August" when "09" then "September" when "10" then "October" when "11" then "November" when "12" then "December" else "" end AS prettyMonth  FROM rowdata_workout WHERE strftime("%Y%m", date) <= "'+formattednow+'" GROUP BY strftime("%Y", date), strftime("%m", date) ORDER BY date DESC;'
+
+    with connection.cursor() as cursor:
+        cursor.execute(query, [])
+        return dictfetchall(cursor)
+
 
 #######################################
 # Home & Static
@@ -95,6 +107,8 @@ def all_months(request):
         'users': users,
         'start_date': start_date,
         'end_date': end_date,
+        'all_months': getAllValidMonths()
+
     })
 
 def month(request, year, month):

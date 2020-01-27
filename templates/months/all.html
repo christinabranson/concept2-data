@@ -5,10 +5,9 @@
 {% block content %}
 
 <div class="mainBox">
-    <p>All races...</p>
-    <ul>
-        {% for race in all_races %}
-        <li><a href="{% url 'race' race_id=race.id %}">{{ race }}</a></li>
+    <ul class="linksList">
+        {% for valid_month in all_months %}
+        <li><a class="dropdown-item" href="{% url 'month' year=valid_month.year month=valid_month.month %}">{{valid_month.prettyMonth }} {{ valid_month.year }}</a></li>
         {% endfor %}
     </ul>
 </div>
