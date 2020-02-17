@@ -15,7 +15,7 @@
 {% for user in users %}
 <div class="user user{{ user.id }}">
    <input type="hidden" name="distance_user{{ user.id }}" id="distance_user{{ user.id }}" value="{{ user.totalDistance }}" />
-   <div class="icon" style="background-image: url('/static/img/{{ user.get_icon_name }}')"></div>
+   <div class="icon" style="background-image: url('/rowstatic/img/{{ user.get_icon_name }}')"></div>
    <span class="name">{{ user.first_name }}</span> - <span class="distance">{{ user.totalDistance|intcomma }} m</span>
 </div>
 {% endfor %}

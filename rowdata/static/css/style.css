@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans|VT323&display=swap');
  body {
      font-family: 'Open Sans', sans-serif;
-     background: url("/static/img/background.gif") no-repeat center bottom fixed;
+     background: url("/rowstatic/img/background.gif") no-repeat center bottom fixed;
      -webkit-background-size: cover;
      -moz-background-size: cover;
      -o-background-size: cover;

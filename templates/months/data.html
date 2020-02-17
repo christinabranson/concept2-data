@@ -19,7 +19,7 @@
 <div class="user user{{ user.id }}">
    <input type="hidden" name="distance_user{{ user.id }}" id="distance_user{{ user.id }}" value="{{ user.totalDistance }}" />
     <input type="hidden" name="distance_user{{ other_user_id }}" id="distance_user{{ other_user_id }}" value="0" />
-   <div class="icon" style="background-image: url('/static/img/{{ user.get_icon_name }}')"></div>
+   <div class="icon" style="background-image: url('/rowstatic/img/{{ user.get_icon_name }}')"></div>
    <span class="name">{{ user.first_name }}</span> - <span class="distance">{{ user.totalDistance|intcomma }} m</span>
 </div>
 

@@ -13,7 +13,7 @@
 {% for user in users %}
 <div class="user user{{ user.id }}">
    <input type="hidden" name="distance_user{{ user.id }}" id="distance_user{{ user.id }}" value="{{ user.totalDistance }}" />
-   <div class="icon" style="background-image: url('/static/img/{{ user.get_icon_name }}')"></div>
+   <div class="icon" style="background-image: url('/rowstatic/img/{{ user.get_icon_name }}')"></div>
     <span class="name"><a href="{% url 'month_data' user_id=user.id year=start_date.year month=start_date.month %}">{{ user.first_name }}</a></span> - <span class="distance">{{ user.totalDistance|intcomma }} m</span>
 </div>
 {% endfor %}
